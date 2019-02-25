@@ -1,0 +1,27 @@
+all:myapp
+CC=gcc
+CFLAGS= -std=c11 -O0 -Wall -g
+INCLUDES=.
+LIBS = -lc
+myapp: driver.o prog1.o prog2.o prog3.o ./d1/prog4.o
+	$(CC) -o myapp driver.o prog1.o prog2.o prog3.o ./d1/prog4.o  $(LIBS)
+prog1.o: prog1.c
+	$(CC) -c prog1.c  $(CFLAGS)
+prog2.o: prog2.c 
+	$(CC) -c prog2.c  $(CFLAGS)
+prog3.o: prog3.c 
+	$(CC) -c prog3.c  $(CFLAGS)
+driver.o: driver.c header.h d1/prog4.h
+	$(CC) -c driver.c -I. -I$(INCLUDES) $(CFLAGS)
+include: ./d1/makefile
+clean:
+	rm -f *.o
+	rm -f ./d1/prog4.o
+install: myexe
+	@cp myexe /usr/bin
+	@chmod a+x /usr/bin/myexe
+	@chmod og-w /usr/bin/myexe
+	@echo "myexe installed successfully in /usr/bin"
+uninstall:
+	@rm -f /usr/bin/myexe
+	@echo "myexe successfully un-installed from /usr/bin"

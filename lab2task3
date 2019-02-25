@@ -1,0 +1,9 @@
+
+gcc -c -fPIC *.c
+ gcc -shared *.o -o libdyna.so
+gcc -c driver.c -I.
+gcc driver.o -o myexe -libdyna -L.
+gcc driver.o -o myexe -ldyna -L.
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/Desktop/SP_Lab_02/Problem3
+./myexe
+
